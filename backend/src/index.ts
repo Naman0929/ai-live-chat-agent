@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("GEMINI_API_KEY:", process.env.GEMINI_API_KEY);
-
 import app from "./app.js";
 import { connectToDatabase } from "./db/connection.js";
 

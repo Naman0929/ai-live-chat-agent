@@ -4,7 +4,6 @@ const TypingAnim = () => {
   return (
     <TypeAnimation
       sequence={[
-        // Same substring at the start will only be typed once, initially
         "Chat With the customer Support Agent",
         1000
       ]}

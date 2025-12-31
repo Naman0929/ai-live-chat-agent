@@ -1,64 +1,41 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, Button, useTheme } from "@mui/material";
 import React from "react";
 import TypingAnim from "../components/typer/TypingAnim";
 import Footer from "../components/footer/Footer";
 
 const Home = () => {
   const theme = useTheme();
-  const isBelowMd = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Box width={"100%"} height={"100%"}>
+    <Box width="100%" minHeight="100vh" display="flex" flexDirection="column">
+      
       <Box
         sx={{
+          flex: 1,
           display: "flex",
-          width: "100%",
           flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
-          mx: "auto",
-          mt: 3,
+          textAlign: "center",
+          px: 2,
+          background: "radial-gradient(circle at top, #0f766e, #020617 70%)",
         }}
       >
-        <Box>
-          <TypingAnim />
-        </Box>
-        <Box
+        <TypingAnim />
+
+        <Typography
+          variant="h6"
           sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: { md: "row", xs: "column", sm: "column" },
-            gap: 5,
-            my: 10,
+            mt: 2,
+            maxWidth: 600,
+            color: "rgba(255,255,255,0.75)",
           }}
         >
-          <img
-            src="robot.png"
-            alt="robot"
-            style={{ width: "200px", margin: "auto" }}
-          />
-          <img
-            className="image-inverted rotate"
-            src="openai.png"
-            alt="openai"
-            style={{ width: "200px", margin: "auto" }}
-          />
-        </Box>
-        <Box sx={{ display: "flex", mx: "auto" }}>
-          <img
-            src="chat.png"
-            alt="chatbot"
-            style={{
-              display: "flex",
-              margin: "auto",
-              width: isBelowMd ? "80%" : "60%",
-              borderRadius: 20,
-              boxShadow: "-5px -5px 105px #64f3d5",
-              marginTop: 20,
-              marginBottom: 20,
-              padding: 10,
-            }}
-          />
-        </Box>
+          AI-powered customer support that responds instantly, understands
+          context, and scales with your business.
+        </Typography>
       </Box>
+
       <Footer />
     </Box>
   );

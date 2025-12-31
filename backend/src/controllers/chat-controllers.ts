@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
-import { configureOpenAI } from "../config/openai-config.js";
-import { OpenAIApi, ChatCompletionRequestMessage } from "openai"
-// import { configureGemini } from "../config/gemini-config.js";
-import { geminiGenerate } from "../config/gemini-client.js";
+import { generateReply } from "../services/llm/gemini-client.js";
 
 // export const generateChatCompletion = async (
 //     req: Request,
@@ -57,7 +54,7 @@ import { geminiGenerate } from "../config/gemini-client.js";
 
 
 
-type DBMessage = {
+type ChatMessage = {
   role: "user" | "assistant";
   content: string;
 };
@@ -136,7 +133,7 @@ export const generateChatCompletion = async (
       content: message,
     });
 
-    const normalizedMessages: DBMessage[] = user.messages.map((m: any) => {
+    const normalizedMessages: ChatMessage[] = user.messages.map((m: any) => {
         if (m.role === "user") {
             return {
             role: "user",
@@ -151,7 +148,7 @@ export const generateChatCompletion = async (
     });
 
     // Call Gemini with full history
-    const reply = await geminiGenerate(
+    const reply = await generateReply(
       normalizedMessages, // full DB history
       message         // latest user message
     );

@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 // import { configureGemini } from "../config/gemini-config.js";
-import { geminiGenerate } from "../config/gemini-client.js";
+import { generateReply } from "../services/llm/gemini-client.js";
 export const generateChatCompletion = async (req, res, next) => {
     const { message } = req.body;
     try {
@@ -62,7 +62,7 @@ export const generateChatCompletion = async (req, res, next) => {
             };
         });
         // Call Gemini with full history
-        const reply = await geminiGenerate(normalizedMessages, // full DB history
+        const reply = await generateReply(normalizedMessages, // full DB history
         message // latest user message
         );
         // Save Gemini reply

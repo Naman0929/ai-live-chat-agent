@@ -7,6 +7,13 @@
     "@mui/material": "^7.3.6",
     "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.11.0"
+    "react-markdown": "^8.0.7",
+    "react-router-dom": "^7.11.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15"
   }
 }

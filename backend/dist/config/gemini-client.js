@@ -112,22 +112,39 @@ If the user asks something unrelated to the store:
 - Politely steer the conversation back to store-related help.
 
 Always prioritize clarity, accuracy, and a good customer experience.`;
-export async function geminiGenerate(messages, userMessage) {
+export async function generateReply(messages, userMessage) {
+    if (!userMessage.trim()) {
+        return "Please enter a valid message.";
+    }
+    const MAX_LEN = 2000;
+    const safeMessage = userMessage.length > MAX_LEN
+        ? userMessage.slice(0, MAX_LEN)
+        : userMessage;
     const ai = new GoogleGenAI({
         apiKey: process.env.GEMINI_API_KEY,
     });
-    const history = messages.slice(0, -1).map((m) => ({
+    const history = messages.map((m) => ({
         role: m.role === "user" ? "user" : "model",
         parts: [{ text: m.content }],
     }));
     history.unshift({
-        role: "user",
+        role: "model",
         parts: [{ text: SYSTEM_PROMPT }],
     });
-    const chat = ai.chats.create({
-        model: "gemini-2.0-flash",
-        history,
-    });
+    try {
+        const chat = ai.chats.create({
+            model: "gemini-2.0-flash",
+            history,
+        });
+        const response = await chat.sendMessage({
+            message: safeMessage,
+        });
+        return response.text;
+    }
+    catch (error) {
+        console.error("Gemini error:", error);
+        return "Sorry, I'm having trouble right now. Please try again in a moment.";
+    }
     //   const chat = ai.chats.create({
     //     model: "gemini-1.5-flash",
     //     history: [
@@ -142,9 +159,9 @@ export async function geminiGenerate(messages, userMessage) {
     //       ...history,
     //     ],
     //   });
-    const response = await chat.sendMessage({
-        message: userMessage,
-    });
-    return response.text;
+    //   const response = await chat.sendMessage({
+    //     message: userMessage,
+    //   });
+    //   return response.text;
 }
 //# sourceMappingURL=gemini-client.js.map
